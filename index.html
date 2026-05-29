@@ -1,0 +1,902 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  />
+
+  <title>A Special Reveal Awaits ✨</title>
+
+  <!-- iMessage / WhatsApp / Facebook preview -->
+  <meta property="og:title" content="A Special Reveal Awaits ✨">
+  <meta property="og:description" content="Scratch to reveal your surprise ♡">
+<meta property="og:image" content="https://withlovecw.github.io/02829/images/preview.jpeg">
+  <meta property="og:type" content="website">
+
+  <!-- Extra support -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="A Special Reveal Awaits ✨">
+  <meta name="twitter:description" content="Scratch to reveal your surprise ♡">
+ <meta name="twitter:image" content="https://withlovecw.github.io/02829/images/preview.jpeg">
+
+  <link rel="preload" as="image" href="./images/back.jpeg" />
+  <link rel="preload" as="image" href="./images/front.jpeg" />
+  <link rel="preload" as="image" href="./images/GIRL.jpeg" />
+  <!-- Optional animated reveal background/video for page 2 -->
+  <link rel="preload" as="video" href="./images/reveal.mp4" />
+
+  <style>
+    @font-face {
+      font-family: 'Samantha';
+      src: url('./images/Samantha_Calligraphy.ttf')
+        format('truetype');
+    }
+
+    html { box-sizing: border-box; }
+    *, *::before, *::after { box-sizing: inherit; }
+
+    body {
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #f0f0f0;
+      overflow: hidden;
+    }
+
+    .sc__wrapper {
+      height: 100vh;
+      max-width: calc(100vh * (1080 / 1920));
+      aspect-ratio: 1080 / 1920;
+      border: 5px solid white;
+      position: relative;
+    }
+
+    .sc__container {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+    }
+
+    #backImage,
+    #scratchCanvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    #backImage {
+      visibility: hidden;
+      z-index: 1;
+    }
+
+    #scratchCanvas {
+      z-index: 2;
+    }
+
+    #instructionText {
+      position: absolute;
+      left: 50%;
+      bottom: 29.5%;
+      transform: translateX(-50%);
+
+      width: 82%;
+
+      text-align: center;
+
+      font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
+
+      color: #fff7ef;
+
+      font-size: 21px;
+
+      line-height: 1.22;
+
+      z-index: 3;
+
+      pointer-events: none;
+
+      text-shadow:
+        0 2px 7px rgba(0,0,0,0.45),
+        0 0 10px rgba(255,255,255,0.22);
+
+      transition:
+        opacity 0.8s ease,
+        transform 0.8s ease;
+    }
+
+    #instructionText.hide {
+      opacity: 0;
+      transform: translateX(-50%) translateY(10px);
+    }
+
+    #instructionText .boy {
+      color: #93dfff;
+      font-weight: bold;
+      letter-spacing: 0.03em;
+    }
+
+    #instructionText .girl {
+      color: #ffadd1;
+      font-weight: bold;
+      letter-spacing: 0.03em;
+    }
+
+    /* REVEAL POPUP */
+    #personalRevealBox {
+      position: absolute;
+      left: 50%;
+      top: 47%;
+      transform: translate(-50%, -50%) scale(0.85);
+
+      width: 82%;
+      text-align: center;
+
+      z-index: 5;
+      opacity: 0;
+      pointer-events: none;
+
+      transition:
+        opacity 0.8s ease,
+        transform 0.8s ease;
+
+      color: white;
+    }
+
+    #personalRevealBox.show {
+      opacity: 1;
+      transform:
+        translate(-50%, -50%)
+        scale(1);
+    }
+
+    /* GIRL IMAGE */
+    #girlRevealGraphic {
+      width: 112%;
+      max-width: 680px;
+
+      display: block;
+
+      margin:
+        0 auto -6% auto;
+
+      object-fit: contain;
+
+      transform: translateX(-5%);
+
+      filter:
+        drop-shadow(
+          0 4px 12px rgba(0,0,0,0.25)
+        );
+    }
+
+    /* SMALLER ELEGANT BOX */
+    #personalTextBox {
+      width: 76%;
+
+      margin:
+        -1% auto 0 auto;
+
+      padding:
+        4.5% 5%
+        4.2% 5%;
+
+      background:
+  rgba(80, 170, 225, 0.94);
+		
+		border: 3px solid white;
+border-radius: 24px;
+
+box-shadow:
+  0 0 18px rgba(80, 170, 225, 0.65);
+
+box-shadow:
+  0 0 18px rgba(80, 170, 225, 0.65);
+    }
+
+/* BABY NAME */
+#babyName {
+  font-family:
+    'Samantha',
+    cursive;
+
+  font-size: 34px;
+
+  font-weight: normal;
+  font-style: normal;
+
+  width: 100%;
+
+  margin:
+    0 auto 1% auto;
+
+  line-height: 1;
+
+  text-align: center;
+
+  white-space: nowrap;
+
+  letter-spacing: 0;
+
+  text-shadow:
+    0 2px 4px rgba(0,0,0,0.18);
+}
+
+/* MESSAGE */
+#message {
+  font-family:
+    Georgia,
+    "Times New Roman",
+    serif;
+
+  font-size: 22px;
+
+  font-style: italic;
+
+  line-height: 1.15;
+
+  text-align: center;
+
+  text-shadow:
+    0 2px 4px rgba(0,0,0,0.18);
+}
+
+/* MOBILE ONLY */
+/* MOBILE ONLY */
+@media (max-width: 768px) {
+
+  #babyName {
+    font-size: 44px;
+  }
+
+  #message {
+    font-size: 26px;
+  }
+
+  #instructionText {
+    font-size: 20px;
+  }
+
+    }
+
+    /* PAGE 2: FULL SCREEN REVEAL VIDEO / RESULT SCREEN */
+    #revealVideoScreen {
+      position: absolute;
+      inset: 0;
+      z-index: 6;
+      opacity: 0;
+      pointer-events: none;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: white;
+      transition: opacity 0.9s ease;
+      background:
+        radial-gradient(circle at center, rgba(255, 90, 170, 0.25), rgba(5, 8, 35, 0.92)),
+        linear-gradient(135deg, #7EDCFF, #2EA9F3);
+    }
+
+   #revealVideoScreen.show {
+  opacity: 1;
+  pointer-events: none;
+}
+
+    #revealVideo {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 1;
+    }
+
+
+
+ .revealContent {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 21%;
+  z-index: 3;
+  text-align: center;
+  pointer-events: none;
+}
+	  
+    #revealVideoScreen.show .revealContent {
+      transform: scale(1);
+    }
+
+    .revealTitle {
+      margin: 0 0 8% 0;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 54px;
+      line-height: 1;
+      color: #fff;
+      text-shadow:
+        0 0 8px rgba(255,255,255,0.8),
+        0 0 20px rgba(255,80,190,0.95),
+        0 4px 12px rgba(0,0,0,0.4);
+    }
+
+    .revealTitle span {
+      display: block;
+      margin-top: 4%;
+      font-size: 86px;
+      color: #ff8ed0;
+      text-shadow:
+        0 0 8px rgba(255,255,255,0.9),
+        0 0 26px rgba(255,80,190,1),
+        0 4px 12px rgba(0,0,0,0.45);
+    }
+
+   #continueButton {
+  opacity: 0;
+  transform: translateY(10px);
+
+  display: inline-block;
+  pointer-events: none;
+
+  border: 2px solid rgba(255,255,255,0.82);
+  border-radius: 999px;
+
+  padding: 18px 54px;
+
+  color: white;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 24px;
+  letter-spacing: 0.04em;
+
+  cursor: pointer;
+
+  background: #43B8F5;
+
+  box-shadow:
+  0 0 24px rgba(80,190,255,1),
+  0 0 46px rgba(80,190,255,0.9),
+  0 0 90px rgba(80,190,255,0.5),
+  0 0 140px rgba(80,190,255,0.25);
+
+  transition:
+    opacity 0.8s ease,
+    transform 0.8s ease,
+    box-shadow 0.25s ease;
+}
+
+#revealVideoScreen.show.ready #continueButton {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+	  
+   #continueButton:hover {
+  box-shadow:
+    0 0 24px rgba(80,190,255,1),
+    0 0 44px rgba(80,190,255,0.7),
+    0 0 80px rgba(80,190,255,0.4);
+}
+	  
+    @media (max-width: 768px) {
+      .revealTitle {
+        font-size: 44px;
+      }
+
+      .revealTitle span {
+        font-size: 72px;
+      }
+
+      #continueButton {
+        font-size: 22px;
+      }
+    }
+
+  </style>
+
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+</head>
+
+<body>
+  <div class="sc__wrapper">
+    <div id="js--sc--container" class="sc__container">
+
+      <img
+        id="backImage"
+        src="./images/back.jpeg"
+        alt="Background"
+      />
+
+      <div id="personalRevealBox">
+
+        <img
+          id="girlRevealGraphic"
+          src="./images/GIRL.jpeg"
+          alt="It's a Boy!"
+        />
+
+        <div id="personalTextBox">
+
+          <div id="babyName">
+  Loading...
+</div>
+
+<div id="message">
+  Loading...
+</div>
+        </div>
+      </div>
+
+
+
+      <div id="revealVideoScreen">
+        <video
+          id="revealVideo"
+          src="./images/reveal.mp4"
+          autoplay
+          muted
+          loop
+          playsinline
+        ></video>
+
+<div class="revealContent">
+  <button id="continueButton" type="button">
+    Continue
+  </button>
+</div>
+
+      </div>
+
+
+      <canvas id="scratchCanvas"></canvas>
+
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+
+      const canvas =
+        document.getElementById("scratchCanvas");
+
+      const container =
+        document.getElementById("js--sc--container");
+
+      const backImage =
+        document.getElementById("backImage");
+
+      const ctx =
+        canvas.getContext("2d");
+
+      const dpr =
+        window.devicePixelRatio || 1;
+
+      canvas.width =
+        container.clientWidth * dpr;
+
+      canvas.height =
+        container.clientHeight * dpr;
+
+      let scratching = false;
+      let fired = false;
+      let lx = null;
+      let ly = null;
+
+      // BINGO WINNING LINE:
+      // This is the full row of 5 blue squares.
+      // Positions are normalised, so they scale with the phone size.
+      const winningZones = [
+        { cx: 0.179, cy: 0.604, rx: 0.060, ry: 0.036, cells: new Set(), done: false },
+        { cx: 0.340, cy: 0.604, rx: 0.060, ry: 0.036, cells: new Set(), done: false },
+        { cx: 0.500, cy: 0.604, rx: 0.060, ry: 0.036, cells: new Set(), done: false },
+        { cx: 0.660, cy: 0.604, rx: 0.060, ry: 0.036, cells: new Set(), done: false },
+        { cx: 0.821, cy: 0.604, rx: 0.060, ry: 0.036, cells: new Set(), done: false }
+      ];
+
+      const CELLS_NEEDED = 6;
+
+      const winSound =
+        new Audio("./sounds/win.mp3");
+
+      winSound.preload = "auto";
+      winSound.volume = 0.7;
+
+      const revealVideoScreen =
+        document.getElementById("revealVideoScreen");
+
+      const continueButton =
+        document.getElementById("continueButton");
+let primed = false;
+
+function primeAudio() {
+  if (primed) return;
+
+  primed = true;
+
+  winSound.muted = true;
+
+  winSound.play()
+    .then(() => {
+      winSound.pause();
+      winSound.currentTime = 0;
+      winSound.muted = false;
+    })
+    .catch(() => {});
+}
+
+      const front = new Image();
+      front.src = "./images/front.jpeg";
+
+      front.onload = () => {
+        ctx.drawImage(
+          front,
+          0,
+          0,
+          canvas.width,
+          canvas.height
+        );
+
+        backImage.style.visibility =
+          "visible";
+
+        ctx.globalCompositeOperation =
+          "destination-out";
+
+        ctx.lineCap = "round";
+        ctx.lineJoin = "round";
+
+        canvas.addEventListener(
+          "mousedown",
+          start
+        );
+
+        canvas.addEventListener(
+          "touchstart",
+          start,
+          { passive: false }
+        );
+
+        canvas.addEventListener(
+          "mouseup",
+          end
+        );
+
+        canvas.addEventListener(
+          "mouseleave",
+          end
+        );
+
+        canvas.addEventListener(
+          "touchend",
+          end
+        );
+
+        canvas.addEventListener(
+          "touchcancel",
+          end
+        );
+      };
+
+    function start(e) {
+      primeAudio();
+  e.preventDefault();
+
+        scratching = true;
+
+        const pos = getPos(e);
+        lx = pos.x;
+        ly = pos.y;
+
+        drawDot(lx, ly);
+        trackWinningScratch(lx, ly);
+
+        canvas.addEventListener(
+          "mousemove",
+          scratch
+        );
+
+        canvas.addEventListener(
+          "touchmove",
+          scratch,
+          { passive: false }
+        );
+      }
+
+      function end() {
+        scratching = false;
+        lx = null;
+        ly = null;
+
+        canvas.removeEventListener(
+          "mousemove",
+          scratch
+        );
+
+        canvas.removeEventListener(
+          "touchmove",
+          scratch
+        );
+
+        checkWin();
+      }
+
+      function getPos(e) {
+
+  const rect =
+    canvas.getBoundingClientRect();
+
+  const touch =
+    e.touches
+      ? e.touches[0]
+      : e;
+
+  const scaleX =
+    canvas.width / rect.width;
+
+  const scaleY =
+    canvas.height / rect.height;
+
+  return {
+    x:
+      (touch.clientX - rect.left)
+      * scaleX,
+
+    y:
+      (touch.clientY - rect.top)
+      * scaleY
+  };
+}
+
+      function scratch(e) {
+        if (!scratching) return;
+
+        e.preventDefault();
+
+        const pos = getPos(e);
+        const x = pos.x;
+        const y = pos.y;
+
+        ctx.lineWidth = 12 * dpr;
+
+        ctx.beginPath();
+        ctx.moveTo(lx, ly);
+        ctx.lineTo(x, y);
+        ctx.stroke();
+
+        trackLine(lx, ly, x, y);
+
+        lx = x;
+        ly = y;
+
+        checkWin();
+      }
+
+      function drawDot(x, y) {
+        ctx.beginPath();
+        ctx.arc(
+          x,
+          y,
+          6 * dpr,
+          0,
+          Math.PI * 2
+        );
+        ctx.fill();
+      }
+
+      function trackLine(x1, y1, x2, y2) {
+        const dist =
+          Math.hypot(x2 - x1, y2 - y1);
+
+        const steps =
+          Math.max(
+            1,
+            Math.ceil(dist / (8 * dpr))
+          );
+
+        for (let i = 0; i <= steps; i++) {
+          const x =
+            x1 + ((x2 - x1) * i) / steps;
+
+          const y =
+            y1 + ((y2 - y1) * i) / steps;
+
+          trackWinningScratch(x, y);
+        }
+      }
+
+      function trackWinningScratch(px, py) {
+        const nx = px / canvas.width;
+        const ny = py / canvas.height;
+
+        winningZones.forEach(zone => {
+          if (zone.done) return;
+
+          const dx =
+            (nx - zone.cx) / zone.rx;
+
+          const dy =
+            (ny - zone.cy) / zone.ry;
+
+          if (
+            dx * dx + dy * dy > 1
+          ) return;
+
+          const localX =
+            (nx - (zone.cx - zone.rx))
+            / (zone.rx * 2);
+
+          const localY =
+            (ny - (zone.cy - zone.ry))
+            / (zone.ry * 2);
+
+          const gridX =
+            Math.floor(localX * 5);
+
+          const gridY =
+            Math.floor(localY * 5);
+
+          zone.cells.add(
+            `${gridX}-${gridY}`
+          );
+
+          if (
+            zone.cells.size >=
+            CELLS_NEEDED
+          ) {
+            zone.done = true;
+          }
+        });
+      }
+
+      function checkWin() {
+        if (fired) return;
+
+        const won =
+          winningZones.every(
+            z => z.done
+          );
+
+        if (won) {
+          fired = true;
+          triggerWin();
+        }
+      }
+
+continueButton.addEventListener("click", () => {
+  const params = new URLSearchParams(window.location.search);
+  const revealId = params.get("id");
+
+  window.location.href = "details.html?id=" + revealId;
+});
+		
+function triggerWin() {
+        setTimeout(() => {
+
+    // instruction text removed
+
+       
+            const confettiColors = [
+  "#7EDCFF",
+  "#4AB8F0",
+  "#1E9FE0",
+  "#BDEEFF",
+  "#D9F6FF",
+  "#FFFFFF",
+          ];
+
+          function confettiBurst(
+            originY = 0.62,
+            particleCount = 110,
+            velocity = 60
+          ) {
+            confetti({
+              particleCount,
+              spread: 60,
+              startVelocity: velocity,
+              gravity: 1.1,
+              ticks: 180,
+              scalar: 0.95,
+              drift:
+                (Math.random() - 0.5)
+                * 0.8,
+              origin: {
+                x: 0.5,
+                y: originY
+              },
+              colors: confettiColors,
+              shapes: ["circle", "square"]
+            });
+          }
+
+          confettiBurst(0.62, 170, 68);
+
+          setTimeout(() => {
+            confettiBurst(0.60, 120, 58);
+          }, 220);
+
+          setTimeout(() => {
+            confettiBurst(0.64, 95, 50);
+          }, 520);
+
+          setTimeout(() => {
+            confettiBurst(0.58, 70, 42);
+          }, 850);
+
+          winSound.currentTime = 0;
+          winSound.play().catch(() => {});
+
+          setTimeout(() => {
+            revealVideoScreen.classList.add("show");
+
+            setTimeout(() => {
+              revealVideoScreen.classList.add("ready");
+            }, 1400);
+          }, 4000);
+
+        }, 1000);
+      }
+
+    });
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
+  const SUPABASE_URL =
+    "https://bfzhvulpymbqzwxorzih.supabase.co";
+
+  const SUPABASE_ANON_KEY =
+    "sb_publishable_aLj5jota1g3icfvF7MROIQ_b4-yKlo3";
+
+  const supabaseClient =
+    supabase.createClient(
+      SUPABASE_URL,
+      SUPABASE_ANON_KEY
+    );
+
+  async function loadRevealData() {
+
+    const params =
+      new URLSearchParams(
+        window.location.search
+      );
+
+    const id =
+      params.get("id");
+
+    if (!id) return;
+
+    const { data, error } =
+      await supabaseClient
+        .from("gender-design1")
+        .select("*")
+        .eq("id", id)
+        .single();
+
+    if (error || !data) {
+      console.error(error);
+      return;
+    }
+
+    document.getElementById(
+      "babyName"
+    ).textContent =
+      data.baby_name;
+
+    document.getElementById(
+      "message"
+    ).textContent =
+      data.message;
+  }
+
+  loadRevealData();
+</script>
+</body>
+</html>
